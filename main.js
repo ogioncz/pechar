@@ -52,6 +52,7 @@
 	
 	var penguin;
 	var itemList;
+	var urlField;
 
 	function renderPenguin() {
 		penguin.innerHTML = null;
@@ -71,6 +72,12 @@
 				penguin.appendChild(img);
 			}
 		}
+
+		var itemString = penguinItems[1];
+		for(var i = 2; i <= 9; i++) {
+			itemString += '|' + penguinItems[i];
+		}
+		urlField.textContent = window.location.protocol + '//' + window.location.host + window.location.pathname + dataDir + 'composed/' + itemString + '.png';
 	}
 
 	function penguinClicked(e) {
@@ -144,6 +151,7 @@
 	function dataLoaded() {
 		penguin = document.querySelector('.penguin');
 		itemList = document.querySelector('.itemList');
+		urlField = document.querySelector('#url');
 
 		var types = {
 			1: 'Color',

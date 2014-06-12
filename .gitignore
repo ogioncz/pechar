@@ -2,3 +2,6 @@ data/paper_items.json
 data/paper_items/*
 !data/paper_items/.htaccess
 !data/paper_items/get.php
+data/composed/*
+!data/composed/.htaccess
+!data/composed/get.php
