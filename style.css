@@ -1,0 +1,14 @@
+.penguin {
+	position: relative;
+}
+.penguin img {
+	position: absolute;
+	/*width: 100%;*/
+}
+.inventory {
+	position: relative;
+}
+.itemList {
+	height: 520px;
+	overflow: auto;
+}

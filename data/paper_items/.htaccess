@@ -1,0 +1,4 @@
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(\d+)\.png$ get.php?id=$1 [QSA]
+
+Header set Access-Control-Allow-Origin "*"
