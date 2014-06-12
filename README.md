@@ -7,8 +7,8 @@ You know that CP inventory is really slow. This is our attempt on creating inven
 We are team behind http://fan-club-penguin.cz – the largest community of Club Penguin players in Czech Republic and Slovakia.
 
 ### Installation
-1. Download http://cdn.clubpenguin.com/play/en/web_service/game_configs/paper_items.json to current directory
-2. Set path to items displayed on penguin. Due to CORS policies we can’t work with canvas, if we use images from other domains. You will have to mirror them (sample mirroring script included in *items/image/*)
+1. Download http://cdn.clubpenguin.com/play/en/web_service/game_configs/paper_items.json to *data/* directory
+2. Due to CORS policies you can’t work with canvas data – required to take clothes off – if you use images from other domains. You will have to mirror them (sample mirroring script – PHP – included in *data/paper_items/*)
 
 ### License
 This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License. Image data are property of Club Penguin.

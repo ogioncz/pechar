@@ -1,5 +1,5 @@
 (function main() {
-	var mirrorDir = 'data/paper_items/';
+	var dataDir = 'data/';
 
 	function getByProperty(array, property, value) {
 		for(var i = 0, len = array.length; i < len; i++) {
@@ -14,12 +14,12 @@
 	var itemData = null;
 
 	var itemsPromise = $.Deferred();
-	$.getJSON('data/paper_items.json', function(data) {
+	$.getJSON(dataDir + 'paper_items.json', function(data) {
 		itemData = data;
 	}).done(itemsPromise.resolve);
 
 	var tagsPromise = $.Deferred();
-	$.getJSON('data/item_tags.json', function(data) {
+	$.getJSON(dataDir + 'item_tags.json', function(data) {
 		itemTags = data;
 	}).done(tagsPromise.resolve);
 
@@ -63,7 +63,7 @@
 				$(img).load({itemType: itemType, itemId: itemId, img: img}, function drawTransparenceCanvas(e) {
 					transparencies[e.data.itemType].draw(e.data.itemId, e.data.img);
 				});
-				img.src = mirrorDir + itemId + '.png';
+				img.src = dataDir + 'paper_items/' + itemId + '.png';
 				img.setAttribute('width', 600);
 				img.setAttribute('height', 600);
 				img.setAttribute('crossorigin', 'anonymous');
