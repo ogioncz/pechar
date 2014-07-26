@@ -13,6 +13,8 @@
 	var itemTags = null;
 	var itemData = null;
 
+	$('#app').html('<p>Please wait a moment, while the data is loading.</p>');
+
 	var itemsPromise = $.Deferred();
 	$.getJSON(dataDir + 'paper_items.json', function(data) {
 		itemData = data;
@@ -149,6 +151,15 @@
 	}
 
 	function dataLoaded() {
+		$('#app').html(
+			'<div class="row">\
+				<div class="col-md-6"><div class="penguin"></div></div>\
+				<div class="col-md-6"><div class="inventory"><input type="search" id="search" class="form-control search"><div class="itemList well"></div></div></div>\
+			</div>\
+			<h2>URL</h2>\
+			<p><code id="url"></code></p>'
+		);
+
 		penguin = document.querySelector('.penguin');
 		itemList = document.querySelector('.itemList');
 		urlField = document.querySelector('#url');
