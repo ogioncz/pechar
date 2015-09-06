@@ -108,14 +108,14 @@
 
 	function search() {
 		var terms = $('.search').val().toLowerCase().split(' ');
-		$('.itemList img').hide();
+		$('.itemList img').addClass('hidden');
 		var selector = '.itemList img';
 		for(var i = 0, len = terms.length; i < len; i++) {
 			if(terms[i] !== '') {
 				selector += '[data-tags*=";' + terms[i] + '"]';
 			}
 		}
-		$(selector).show().parent().trigger('scroll');
+		$(selector).removeClass('hidden').parent().trigger('scroll');
 	}
 
 	function loadHash() {
