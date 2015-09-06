@@ -154,7 +154,7 @@
 		$('#app').html(
 			'<div class="row">\
 				<div class="col-md-6"><div class="penguin"></div></div>\
-				<div class="col-md-6"><div class="inventory"><input type="search" id="search" class="form-control search"><div class="itemList well"></div></div></div>\
+				<div class="col-md-6"><div class="inventory"><input type="search" placeholder="Type in to search…" id="search" class="form-control search"><div class="itemList well"></div></div></div>\
 			</div>\
 			<h2>URL</h2>\
 			<p><code id="url"></code></p>'
