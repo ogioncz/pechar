@@ -12,6 +12,7 @@
 
 	var itemTags = null;
 	var itemData = null;
+	var inventoryItems = null;
 
 	$('#app').html('<p>Please wait a moment, while the data is loading.</p>');
 
@@ -108,14 +109,22 @@
 
 	function search() {
 		var terms = $('.search').val().toLowerCase().split(' ');
-		$('.itemList img').addClass('hidden');
-		var selector = '.itemList img';
-		for(var i = 0, len = terms.length; i < len; i++) {
-			if(terms[i] !== '') {
-				selector += '[data-tags*=";' + terms[i] + '"]';
+		for(var i = 0, l = inventoryItems.length; i < l; i++) {
+			item = inventoryItems[i];
+			var hidden = true;
+			for(var term of terms) {
+				if(term !== '' && item.getAttribute('data-tags').indexOf(term) > -1) {
+					hidden = false;
+					break;
+				}
+			}
+			if (hidden) {
+				item.classList.add('hidden')
+			} else {
+				item.classList.remove('hidden')
 			}
 		}
-		$(selector).removeClass('hidden').parent().trigger('scroll');
+		$('.itemList').trigger('scroll');
 	}
 
 	function loadHash() {
@@ -199,7 +208,8 @@
 			itemList.appendChild(img);
 		}
 
-		$('.itemList img').lazyload({
+		inventoryItems = $('.itemList img');
+		inventoryItems.lazyload({
 			threshold: 120,
 			container: $(".itemList")
 		});
