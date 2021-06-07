@@ -198,7 +198,7 @@
 			
 			var tags = ';' + tagify(types[item.type] + ' ' + item.label + ' ' + getTags(item.id).join(' '));
 
-			img.setAttribute('data-original', 'http://media8.clubpenguin.com/game/items/images/paper/icon/120/' + item.id + '.png');
+			img.setAttribute('data-original', dataDir + 'icons/' + item.id + '.png');
 			img.setAttribute('title', item.label);
 			
 			img.setAttribute('data-id', item.id);

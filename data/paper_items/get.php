@@ -9,7 +9,7 @@ function getContents($url) {
 }
 
 function saveItem($id) {
-	$url = 'http://media8.clubpenguin.com/game/items/images/paper/image/600/' . $id . '.png';
+	$url = 'https://icer.ink/media8.clubpenguin.com/game/items/images/paper/image/600/' . $id . '.png';
 	$content = getContents($url);
 	file_put_contents(__DIR__ . '/' . $id . '.png', $content);
 }
