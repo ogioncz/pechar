@@ -7,7 +7,7 @@
   "dependencies": {
     "bootstrap": "^3.4.1",
     "jquery": "^1.12.4",
-    "jquery-lazyload": "^1.9.7"
+    "lazyload": "^2.0.0-rc.2"
   },
   "devDependencies": {
     "parcel": "^2.0.0-beta.3.1"

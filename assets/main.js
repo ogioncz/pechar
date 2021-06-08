@@ -1,6 +1,6 @@
 import './jquery';
 import 'bootstrap/js/tooltip';
-import 'jquery-lazyload';
+import 'lazyload';
 import TransparencyChecker from './TransparencyChecker';
 
 (function main() {
@@ -205,7 +205,7 @@ import TransparencyChecker from './TransparencyChecker';
 			
 			var tags = ';' + tagify(types[item.type] + ' ' + item.label + ' ' + getTags(item.id).join(' '));
 
-			img.setAttribute('data-original', mediaServer + '/game/items/images/paper/icon/120/' + item.id + '.png');
+			img.setAttribute('data-src', mediaServer + '/game/items/images/paper/icon/120/' + item.id + '.png');
 			img.setAttribute('title', item.label);
 			
 			img.setAttribute('data-id', item.id);
@@ -215,10 +215,9 @@ import TransparencyChecker from './TransparencyChecker';
 			itemList.appendChild(img);
 		}
 
-		inventoryItems = $('.itemList img');
-		inventoryItems.lazyload({
-			threshold: 120,
-			container: $(".itemList")
+		inventoryItems = document.querySelectorAll('.itemList img');
+		lazyload(inventoryItems, {
+			root: document.querySelector('.itemList')
 		});
 		$('img').tooltip({
 			'container': 'body'
