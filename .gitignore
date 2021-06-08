@@ -4,3 +4,6 @@ data/composed/*
 mediacache/*
 !mediacache/.htaccess
 !mediacache/get.php
+dist/
+node_modules/
+.parcel-cache/

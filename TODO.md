@@ -5,7 +5,6 @@
 * search hidden by default?
 * connect to cp
 * clean codebase
-* add makefile
 * polish design
 * more performant filtering and changing clothes
 * undressing fallback?

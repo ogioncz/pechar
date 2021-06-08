@@ -1,4 +1,4 @@
-var TransparencyChecker = function TransparencyChecker() {
+export default function TransparencyChecker() {
 	this.width = 600;
 	this.height = 600;
 	this.itemId = null;

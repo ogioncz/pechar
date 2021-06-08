@@ -1,6 +1,10 @@
+import './jquery';
+import 'bootstrap/js/tooltip';
+import 'jquery-lazyload';
+import TransparencyChecker from './TransparencyChecker';
+
 (function main() {
-	// CHANGE MEDIA SERVER PATH HERE
-	var mediaServer = 'mediacache';
+	var mediaServer = process.env.MEDIA_SERVER_URI ?? 'mediacache';
 
 	var dataDir = 'data';
 
