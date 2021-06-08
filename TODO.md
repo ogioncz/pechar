@@ -5,5 +5,4 @@
 * search hidden by default?
 * connect to cp
 * polish design
-* more performant filtering and changing clothes
 * undressing fallback?

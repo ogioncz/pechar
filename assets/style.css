@@ -3,7 +3,7 @@
 .penguin {
 	position: relative;
 }
-.penguin img {
+.penguin canvas {
 	position: absolute;
 	/*width: 100%;*/
 }

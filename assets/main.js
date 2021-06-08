@@ -1,7 +1,7 @@
+import CanvasLayer from './CanvasLayer';
 import 'lazyload';
 import some from 'lodash/some';
 import Tooltip from 'bootstrap/js/dist/tooltip';
-import TransparencyChecker from './TransparencyChecker';
 
 const mediaServer = process.env.MEDIA_SERVER_URI ?? 'mediacache';
 const dataDir = 'data';
@@ -78,16 +78,16 @@ document.addEventListener('DOMContentLoaded', function main() {
 		[ItemType.PIN]: 0,
 		[ItemType.BACKGROUND]: 0,
 	};
-	let transparencies = {
-		[ItemType.COLOR]: new TransparencyChecker(0, null),
-		[ItemType.HEAD]: new TransparencyChecker(0, null),
-		[ItemType.FACE]: new TransparencyChecker(0, null),
-		[ItemType.NECK]: new TransparencyChecker(0, null),
-		[ItemType.BODY]: new TransparencyChecker(0, null),
-		[ItemType.HAND]: new TransparencyChecker(0, null),
-		[ItemType.FEET]: new TransparencyChecker(0, null),
-		[ItemType.PIN]: new TransparencyChecker(0, null),
-		[ItemType.BACKGROUND]: new TransparencyChecker(0, null),
+	let layers = {
+		[ItemType.COLOR]: null,
+		[ItemType.HEAD]: null,
+		[ItemType.FACE]: null,
+		[ItemType.NECK]: null,
+		[ItemType.BODY]: null,
+		[ItemType.HAND]: null,
+		[ItemType.FEET]: null,
+		[ItemType.PIN]: null,
+		[ItemType.BACKGROUND]: null,
 	}
 
 	let penguin;
@@ -95,21 +95,9 @@ document.addEventListener('DOMContentLoaded', function main() {
 	let urlField;
 
 	function renderPenguin() {
-		penguin.innerHTML = null;
 		for (let itemType of layerOrder) {
 			const itemId = penguinItems[itemType];
-			if (itemId !== 0) {
-				const img = document.createElement('img');
-				img.addEventListener('load', () => {
-					transparencies[itemType].draw(itemId, img);
-				});
-				img.src = mediaServer + '/game/items/images/paper/image/600/' + itemId + '.png';
-				img.setAttribute('width', 600);
-				img.setAttribute('height', 600);
-				img.setAttribute('crossorigin', 'anonymous');
-
-				penguin.appendChild(img);
-			}
+			layers[itemType].draw(itemId !== 0 ? `${mediaServer}/game/items/images/paper/image/600/${itemId}.png` : null);
 		}
 
 		let itemString = itemTypes.map((itemType) => penguinItems[itemType]).join('|');
@@ -118,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function main() {
 
 	function penguinClicked(e) {
 		for (let layer of Array.from(layerOrder).reverse()) {
-			if (transparencies[layer].isEmpty()) {
+			if (layers[layer].isEmpty()) {
 				continue;
 			}
 
@@ -128,9 +116,9 @@ document.addEventListener('DOMContentLoaded', function main() {
 				y: e.clientY - imgPos.top,
 			};
 
-			const transparency = transparencies[layer].getTransparency(mousePos.x, mousePos.y);
+			const transparency = layers[layer].getTransparency(mousePos.x, mousePos.y);
 			if (transparency !== 0) {
-				console.log(layer, penguinItems, transparencies)
+				console.log(layer, penguinItems, layers)
 				if (layer === 1) {
 					return;
 				}
@@ -208,6 +196,12 @@ document.addEventListener('DOMContentLoaded', function main() {
 		penguin = document.querySelector('.penguin');
 		itemList = document.querySelector('.itemList');
 		urlField = document.querySelector('#url');
+
+		for (let layer of layerOrder) {
+			const clayer = new CanvasLayer(600, 600);
+			penguin.appendChild(clayer.canvas);
+			layers[layer] = clayer;
+		}
 
 		for (let item of itemData) {
 			item.id = item.paper_item_id;
