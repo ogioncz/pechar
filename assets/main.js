@@ -221,7 +221,17 @@ document.addEventListener('DOMContentLoaded', function main() {
 
 			const tags = ';' + tagify(itemTypeNames[item.type] + ' ' + item.label + ' ' + getTags(item.id).join(' '));
 
-			img.setAttribute('data-src', mediaServer + '/game/items/images/paper/icon/120/' + item.id + '.png');
+			let srcs = [120, 600, 1200, 200, 500, 60].map(size => `${mediaServer}/game/items/images/paper/icon/${size}/${item.id}.png`);
+			img.setAttribute('data-src', srcs.shift());
+			img.addEventListener('error', function tryNextSource() {
+				if (srcs.length >= 0) {
+					img.setAttribute('src', srcs.shift());
+				} else {
+					img.classList.add('bg-secondary');
+					img.removeEventListener('error', tryNextSource);
+				};
+			});
+
 			img.setAttribute('title', item.label);
 
 			img.setAttribute('data-id', item.id);
