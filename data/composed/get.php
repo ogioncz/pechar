@@ -1,9 +1,24 @@
 <?php
-require __DIR__ . '/../paper_items/get.php';
 
 $layerOrder = [9, 1, 7, 5, 4, 3, 2, 6, 8];
 
 $dataString = pathinfo(parse_url($_SERVER['REQUEST_URI'],  PHP_URL_PATH), PATHINFO_FILENAME);
+
+$useMediaCache = !isset($_ENV['MEDIA_SERVER_LOCAL_DIRECTORY']);
+
+if ($useMediaCache) {
+	$mediaServerLocal = $_ENV['MEDIA_SERVER_LOCAL_DIRECTORY'];
+} else {
+	require __DIR__ . '/../../mediacache/get.php';
+
+	$mediaServerLocal = __DIR__ . '/../../mediacache';
+}
+
+if (isset($_ENV['CACHE_DIRECTORY'])) {
+	$cacheDirectory = $_ENV['CACHE_DIRECTORY'];
+} else {
+	$cacheDirectory = __DIR__;
+}
 
 if(!preg_match('/^\d+\|\d+\|\d+\|\d+\|\d+\|\d+\|\d+\|\d+\|\d+$/', $dataString)) {
 	http_response_code(400);
@@ -13,7 +28,7 @@ if(!preg_match('/^\d+\|\d+\|\d+\|\d+\|\d+\|\d+\|\d+\|\d+\|\d+$/', $dataString)) 
 
 $data = explode('|', $dataString);
 
-$filename = __DIR__ . '/' . $dataString . '.png';
+$filename = $cacheDirectory . '/' . $dataString . '.png';
 
 if(file_exists($filename)) {
 	header('Location: ' . $dataString . '.png');
@@ -30,11 +45,16 @@ foreach($layerOrder as $layer) {
 	if($id === 0) {
 		continue;
 	}
-	$item_filename = __DIR__ . '/../paper_items/' . $id . '.png';
+	$itemServerPath = '/game/items/images/paper/image/600/' . $id . '.png';
+	$item_filename = $mediaServerLocal . $itemServerPath;
 	if(!file_exists($item_filename)) {
-		try {
-			saveItem($id);
-		} catch(Exception $e) {
+		if ($useMediaCache) {
+			try {
+				saveItem($itemServerPath);
+			} catch(Exception $e) {
+				$data[$layer-1] = 0;
+			}
+		} else {
 			$data[$layer-1] = 0;
 		}
 	}

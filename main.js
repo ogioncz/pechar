@@ -1,5 +1,8 @@
 (function main() {
-	var dataDir = 'data/';
+	// CHANGE MEDIA SERVER PATH HERE
+	var mediaServer = 'mediacache';
+
+	var dataDir = 'data';
 
 	function getByProperty(array, property, value) {
 		for(var i = 0, len = array.length; i < len; i++) {
@@ -17,12 +20,12 @@
 	$('#app').html('<p>Please wait a moment, while the data is loading.</p>');
 
 	var itemsPromise = $.Deferred();
-	$.getJSON(dataDir + 'paper_items.json', function(data) {
+	$.getJSON(mediaServer + '/play/en/web_service/game_configs/paper_items.json', function(data) {
 		itemData = data;
 	}).done(itemsPromise.resolve);
 
 	var tagsPromise = $.Deferred();
-	$.getJSON(dataDir + 'item_tags.json', function(data) {
+	$.getJSON(dataDir + '/item_tags.json', function(data) {
 		itemTags = data;
 	}).done(tagsPromise.resolve);
 
@@ -67,7 +70,7 @@
 				$(img).load({itemType: itemType, itemId: itemId, img: img}, function drawTransparenceCanvas(e) {
 					transparencies[e.data.itemType].draw(e.data.itemId, e.data.img);
 				});
-				img.src = dataDir + 'paper_items/' + itemId + '.png';
+				img.src = mediaServer + '/game/items/images/paper/image/600/' + itemId + '.png';
 				img.setAttribute('width', 600);
 				img.setAttribute('height', 600);
 				img.setAttribute('crossorigin', 'anonymous');
@@ -80,7 +83,7 @@
 		for(var i = 2; i <= 9; i++) {
 			itemString += '|' + penguinItems[i];
 		}
-		urlField.textContent = window.location.protocol + '//' + window.location.host + window.location.pathname + dataDir + 'composed/' + itemString + '.png';
+		urlField.textContent = window.location.protocol + '//' + window.location.host + window.location.pathname + dataDir + '/composed/' + itemString + '.png';
 	}
 
 	function penguinClicked(e) {
@@ -198,7 +201,7 @@
 			
 			var tags = ';' + tagify(types[item.type] + ' ' + item.label + ' ' + getTags(item.id).join(' '));
 
-			img.setAttribute('data-original', dataDir + 'icons/' + item.id + '.png');
+			img.setAttribute('data-original', mediaServer + '/game/items/images/paper/icon/120/' + item.id + '.png');
 			img.setAttribute('title', item.label);
 			
 			img.setAttribute('data-id', item.id);
