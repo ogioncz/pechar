@@ -7,11 +7,11 @@ $dataString = pathinfo(parse_url($_SERVER['REQUEST_URI'],  PHP_URL_PATH), PATHIN
 $useMediaCache = !isset($_ENV['MEDIA_SERVER_LOCAL_DIRECTORY']);
 
 if ($useMediaCache) {
-	$mediaServerLocal = $_ENV['MEDIA_SERVER_LOCAL_DIRECTORY'];
-} else {
 	require __DIR__ . '/../../mediacache/get.php';
 
 	$mediaServerLocal = __DIR__ . '/../../mediacache';
+} else {
+	$mediaServerLocal = $_ENV['MEDIA_SERVER_LOCAL_DIRECTORY'];
 }
 
 if (isset($_ENV['CACHE_DIRECTORY'])) {
