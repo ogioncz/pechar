@@ -8,7 +8,7 @@ function saveIcon($id) {
 }
 
 if(count(debug_backtrace()) === 0) {
-	$id = intVal($_GET['id']);
+	$id = (int) pathinfo(parse_url($_SERVER['REQUEST_URI'],  PHP_URL_PATH), PATHINFO_FILENAME);
 	try {
 		saveIcon($id);
 		header('Location: ' . $id . '.png');

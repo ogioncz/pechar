@@ -3,18 +3,20 @@ require __DIR__ . '/../paper_items/get.php';
 
 $layerOrder = [9, 1, 7, 5, 4, 3, 2, 6, 8];
 
-if(!preg_match('/^\d+\|\d+\|\d+\|\d+\|\d+\|\d+\|\d+\|\d+\|\d+$/', $_GET['data'])) {
+$dataString = pathinfo(parse_url($_SERVER['REQUEST_URI'],  PHP_URL_PATH), PATHINFO_FILENAME);
+
+if(!preg_match('/^\d+\|\d+\|\d+\|\d+\|\d+\|\d+\|\d+\|\d+\|\d+$/', $dataString)) {
 	http_response_code(400);
 	echo 'Bad Request';
 	die;
 }
 
-$data = explode('|', $_GET['data']);
+$data = explode('|', $dataString);
 
-$filename = __DIR__ . '/' . $_GET['data'] . '.png';
+$filename = __DIR__ . '/' . $dataString . '.png';
 
 if(file_exists($filename)) {
-	header('Location: ' . $_GET['data'] . '.png');
+	header('Location: ' . $dataString . '.png');
 	die;
 }
 
@@ -37,7 +39,7 @@ foreach($layerOrder as $layer) {
 		}
 	}
 	$newData = implode('|', $data);
-	if($newData !== $_GET['data']) {
+	if($newData !== $dataString) {
 		header('Location: ' . $newData . '.png');
 		die;
 	}
@@ -49,4 +51,4 @@ foreach($layerOrder as $layer) {
 }
 
 imagePng($image, $filename);
-header('Location: ' . $_GET['data'] . '.png');
+header('Location: ' . $dataString . '.png');
