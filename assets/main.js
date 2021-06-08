@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function main() {
 	var itemData = null;
 	var inventoryItems = null;
 
-	$('#app').html('<p>Please wait a moment, while the data is loading.</p>');
+	document.querySelector('#app').innerHTML = '<p>Please wait a moment, while the data is loading.</p>';
 
 	const itemsPromise = fetch(mediaServer + '/play/en/web_service/game_configs/paper_items.json').then((resp) => resp.json()).then((data) => itemData = data);
 
@@ -64,8 +64,8 @@ document.addEventListener('DOMContentLoaded', function main() {
 			var itemId = penguinItems[itemType];
 			if(itemId !== 0) {
 				var img = document.createElement('img');
-				$(img).load({itemType: itemType, itemId: itemId, img: img}, function drawTransparenceCanvas(e) {
-					transparencies[e.data.itemType].draw(e.data.itemId, e.data.img);
+				img.addEventListener('load', () => {
+					transparencies[itemType].draw(itemId, img);
 				});
 				img.src = mediaServer + '/game/items/images/paper/image/600/' + itemId + '.png';
 				img.setAttribute('width', 600);
@@ -90,8 +90,11 @@ document.addEventListener('DOMContentLoaded', function main() {
 				continue;
 			}
 
-			var imgPos = $(this).offset();
-			var mousePos = {x: e.pageX - imgPos.left, y: e.pageY - imgPos.top};
+			const imgPos = e.target.getBoundingClientRect();
+			const mousePos = {
+				x: e.clientX - imgPos.left,
+				y: e.clientY - imgPos.top,
+			};
 
 			var transparency = transparencies[layer].getTransparency(mousePos.x, mousePos.y);
 			if(transparency !== 0) {
@@ -108,7 +111,7 @@ document.addEventListener('DOMContentLoaded', function main() {
 	}
 
 	function search() {
-		var terms = $('.search').val().toLowerCase().split(' ');
+		var terms = document.querySelector('.search').value.toLowerCase().split(' ');
 		for(var i = 0, l = inventoryItems.length; i < l; i++) {
 			item = inventoryItems[i];
 			var hidden = true;
@@ -124,7 +127,8 @@ document.addEventListener('DOMContentLoaded', function main() {
 				item.classList.remove('hidden')
 			}
 		}
-		$('.itemList').trigger('scroll');
+		document.querySelector('.itemList').dispatchEvent(new Event('scroll'));
+
 	}
 
 	function loadHash() {
@@ -160,14 +164,14 @@ document.addEventListener('DOMContentLoaded', function main() {
 	}
 
 	function dataLoaded() {
-		$('#app').html(
-			'<div class="row">\
-				<div class="col-md-6"><div class="penguin"></div></div>\
-				<div class="col-md-6"><div class="inventory"><input type="search" placeholder="Type in to search…" id="search" class="form-control search"><div class="itemList well"></div></div></div>\
-			</div>\
-			<h2>URL</h2>\
-			<p><code id="url"></code></p>'
-		);
+		document.querySelector('#app').innerHTML = `
+			<div class="row">
+				<div class="col-md-6"><div class="penguin"></div></div>
+				<div class="col-md-6"><div class="inventory"><input type="search" placeholder="Type in to search…" id="search" class="form-control search"><div class="itemList well"></div></div></div>
+			</div>
+			<h2>URL</h2>
+			<p><code id="url"></code></p>
+		`;
 
 		penguin = document.querySelector('.penguin');
 		itemList = document.querySelector('.itemList');
@@ -215,17 +219,19 @@ document.addEventListener('DOMContentLoaded', function main() {
 		$('img').tooltip({
 			'container': 'body'
 		});
-		$('img').click(function(e) {
-			var itemId = $(this).attr('data-id');
-			var type = $(this).attr('data-type');
-			penguinItems[type] = itemId;
-			updateHash();
+		document.querySelectorAll('img').forEach((img) => {
+			img.addEventListener('click', () => {
+				const itemId = img.getAttribute('data-id');
+				const type = img.getAttribute('data-type');
+				penguinItems[type] = itemId;
+				updateHash();
 
-			renderPenguin();
+				renderPenguin();
+			});
 		});
-		
-		$('.search').keyup(search);
-		$('.search').change(search);
+
+		document.querySelector('.search').addEventListener('keyup', search);
+		document.querySelector('.search').addEventListener('change', search);
 
 		loadHash();
 		renderPenguin();
@@ -235,6 +241,6 @@ document.addEventListener('DOMContentLoaded', function main() {
 			renderPenguin();
 		}, false);
 
-		$('.penguin').click(penguinClicked);
+		document.querySelector('.penguin').addEventListener('click', penguinClicked);
 	}
 });
