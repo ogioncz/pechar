@@ -1,6 +1,5 @@
-import './jquery';
-import 'bootstrap/js/tooltip';
 import 'lazyload';
+import Tooltip from 'bootstrap/js/dist/tooltip';
 import TransparencyChecker from './TransparencyChecker';
 
 document.addEventListener('DOMContentLoaded', function main() {
@@ -122,9 +121,9 @@ document.addEventListener('DOMContentLoaded', function main() {
 				}
 			}
 			if (hidden) {
-				item.classList.add('hidden')
+				item.classList.add('d-none');
 			} else {
-				item.classList.remove('hidden')
+				item.classList.remove('d-none');
 			}
 		}
 		document.querySelector('.itemList').dispatchEvent(new Event('scroll'));
@@ -166,8 +165,20 @@ document.addEventListener('DOMContentLoaded', function main() {
 	function dataLoaded() {
 		document.querySelector('#app').innerHTML = `
 			<div class="row">
-				<div class="col-md-6"><div class="penguin"></div></div>
-				<div class="col-md-6"><div class="inventory"><input type="search" placeholder="Type in to search…" id="search" class="form-control search"><div class="itemList well"></div></div></div>
+				<div class="col-md-6">
+					<div class="penguin"></div>
+				</div>
+				<div class="col-md-6">
+					<div class="inventory">
+						<div class="card border-secondary">
+							<div class="itemList card-body">
+							</div>
+							<div class="card-footer">
+								<input type="search" placeholder="Type in to search…" id="search" class="form-control search">
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 			<h2>URL</h2>
 			<p><code id="url"></code></p>
@@ -216,9 +227,11 @@ document.addEventListener('DOMContentLoaded', function main() {
 		lazyload(inventoryItems, {
 			root: document.querySelector('.itemList')
 		});
-		$('img').tooltip({
-			'container': 'body'
+
+		const tooltipList = Array.from(inventoryItems).map((tooltipTriggerEl) => {
+			return new Tooltip(tooltipTriggerEl)
 		});
+
 		document.querySelectorAll('img').forEach((img) => {
 			img.addEventListener('click', () => {
 				const itemId = img.getAttribute('data-id');

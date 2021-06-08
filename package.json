@@ -5,8 +5,8 @@
   "author": "Jan Tojnar <jtojnar@gmail.com>",
   "license": "CC-BY-SA-4.0",
   "dependencies": {
-    "bootstrap": "^3.4.1",
-    "jquery": "^1.12.4",
+    "@popperjs/core": "^2.9.2",
+    "bootstrap": "^5.0.1",
     "lazyload": "^2.0.0-rc.2"
   },
   "devDependencies": {
