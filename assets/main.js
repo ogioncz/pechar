@@ -23,18 +23,11 @@ import TransparencyChecker from './TransparencyChecker';
 
 	$('#app').html('<p>Please wait a moment, while the data is loading.</p>');
 
-	var itemsPromise = $.Deferred();
-	$.getJSON(mediaServer + '/play/en/web_service/game_configs/paper_items.json', function(data) {
-		itemData = data;
-	}).done(itemsPromise.resolve);
+	const itemsPromise = fetch(mediaServer + '/play/en/web_service/game_configs/paper_items.json').then((resp) => resp.json()).then((data) => itemData = data);
 
-	var tagsPromise = $.Deferred();
-	$.getJSON(dataDir + '/item_tags.json', function(data) {
-		itemTags = data;
-	}).done(tagsPromise.resolve);
+	const tagsPromise = fetch(dataDir + '/item_tags.json').then((resp) => resp.json()).then((data) => itemTags = data);
 
-	$.when(itemsPromise, tagsPromise).done(dataLoaded);
-
+	Promise.all([itemsPromise, tagsPromise]).then(dataLoaded);
 
 	var penguinItems = {
 		1: 1,
