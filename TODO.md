@@ -4,7 +4,6 @@
 * image links
 * search hidden by default?
 * connect to cp
-* clean codebase
 * polish design
 * more performant filtering and changing clothes
 * undressing fallback?
