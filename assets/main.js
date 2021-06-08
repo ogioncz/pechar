@@ -3,7 +3,7 @@ import 'bootstrap/js/tooltip';
 import 'lazyload';
 import TransparencyChecker from './TransparencyChecker';
 
-(function main() {
+document.addEventListener('DOMContentLoaded', function main() {
 	var mediaServer = process.env.MEDIA_SERVER_URI ?? 'mediacache';
 
 	var dataDir = 'data';
@@ -237,4 +237,4 @@ import TransparencyChecker from './TransparencyChecker';
 
 		$('.penguin').click(penguinClicked);
 	}
-}());
+});
