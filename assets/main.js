@@ -196,9 +196,10 @@ document.addEventListener('DOMContentLoaded', function main() {
 		penguin = document.querySelector('.penguin');
 		itemList = document.querySelector('.itemList');
 		urlField = document.querySelector('#url');
+		const penguinSize = Math.min(600, penguin.offsetWidth);
 
 		for (let layer of layerOrder) {
-			const clayer = new CanvasLayer(600, 600);
+			const clayer = new CanvasLayer(penguinSize, penguinSize);
 			penguin.appendChild(clayer.canvas);
 			layers[layer] = clayer;
 		}
@@ -264,6 +265,14 @@ document.addEventListener('DOMContentLoaded', function main() {
 		window.addEventListener('hashchange', function hashChanged() {
 			loadHash();
 			renderPenguin();
+		}, false);
+
+		window.addEventListener('resize', function windowResized() {
+			const penguinSize = Math.min(600, penguin.offsetWidth);
+
+			for (let itemType of layerOrder) {
+				layers[itemType].resize(penguinSize, penguinSize);
+			}
 		}, false);
 
 		document.querySelector('.penguin').addEventListener('click', penguinClicked);

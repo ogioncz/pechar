@@ -11,9 +11,7 @@ export default function CanvasLayer(width, height) {
 	this.image.setAttribute('crossorigin', 'anonymous');
 
 	this.image.addEventListener('load', () => {
-		this.context.clearRect(0, 0, this.width, this.height);
-		this.context.drawImage(this.image, 0, 0);
-		this.imageData = this.context.getImageData(0, 0, this.width, this.height);
+		this.redrawImage();
 	});
 }
 CanvasLayer.prototype.draw = function draw(uri) {
@@ -25,6 +23,18 @@ CanvasLayer.prototype.draw = function draw(uri) {
 		}
 		this.image.src = uri;
 	}
+};
+CanvasLayer.prototype.redrawImage = function redrawImage() {
+	this.context.clearRect(0, 0, this.width, this.height);
+	this.context.drawImage(this.image, 0, 0, this.image.width, this.image.height, 0, 0, this.width, this.height);
+	this.imageData = this.context.getImageData(0, 0, this.width, this.height);
+};
+CanvasLayer.prototype.resize = function resize(width, height) {
+	this.width = width;
+	this.height = height;
+	this.canvas.setAttribute('width', this.width);
+	this.canvas.setAttribute('height', this.height);
+	this.redrawImage();
 };
 CanvasLayer.prototype.getTransparency = function getTransparency(x, y) {
 	var x = x << 0;

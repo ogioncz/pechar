@@ -2,10 +2,16 @@
 
 .penguin {
 	position: relative;
+	margin: auto;
+}
+.penguin canvas:first-child {
+	/* Make the penguin take the height of the canvas. */
+	position: relative;
 }
 .penguin canvas {
 	position: absolute;
-	/*width: 100%;*/
+	top: 0;
+	left: 0;
 }
 .inventory {
 	position: relative;
