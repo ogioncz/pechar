@@ -4,5 +4,4 @@
 * image links
 * search hidden by default?
 * connect to cp
-* polish design
 * undressing fallback?
