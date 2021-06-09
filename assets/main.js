@@ -220,7 +220,7 @@ document.addEventListener('DOMContentLoaded', function main() {
 			let srcs = [120, 600, 1200, 200, 500, 60].map(size => `${mediaServer}/game/items/images/paper/icon/${size}/${item.id}.png`);
 			img.setAttribute('data-src', srcs.shift());
 			img.addEventListener('error', function tryNextSource() {
-				if (srcs.length >= 0) {
+				if (srcs.length > 0) {
 					img.setAttribute('src', srcs.shift());
 				} else {
 					img.classList.add('bg-secondary');
