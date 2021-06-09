@@ -131,9 +131,10 @@ document.addEventListener('DOMContentLoaded', function main() {
 	}
 
 	function search() {
-		const terms = document.querySelector('.search').value.toLowerCase().split(' ');
+		const query = event.target.value.trim();
+		const terms = query.toLowerCase().split(/\s+/);
 		inventoryItems.forEach((item) => {
-			const visible = some(terms, (term) => term !== '' && item.getAttribute('data-tags').includes(term));
+			const visible = query === '' || some(terms, (term) => item.getAttribute('data-tags').includes(term));
 			item.classList.toggle('d-none', !visible);
 		});
 		document.querySelector('.itemList').dispatchEvent(new Event('scroll'));
