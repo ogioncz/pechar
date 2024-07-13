@@ -1,4 +1,4 @@
-@import 'bootstrap/dist/css/bootstrap.min.css';
+@import 'npm:bootstrap/dist/css/bootstrap.min.css';
 
 .penguin {
 	position: relative;

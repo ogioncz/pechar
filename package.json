@@ -11,7 +11,7 @@
     "lodash": "^4.17.21"
   },
   "devDependencies": {
-    "parcel": "^2.0.0-beta.3.1"
+    "parcel": "^2.0.0"
   },
   "scripts": {
     "dev": "parcel watch assets/index.html --public-url ./",
