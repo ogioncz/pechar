@@ -13,6 +13,12 @@
   "devDependencies": {
     "parcel": "^2.0.0"
   },
+  "files": [
+    ".htaccess",
+    "data/",
+    "dist/",
+    "mediacache/"
+  ],
   "scripts": {
     "dev": "parcel watch assets/index.html --public-url ./",
     "build": "parcel build assets/index.html --public-url ./"
